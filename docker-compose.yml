@@ -1,24 +1,6 @@
 version: '3.8'
 
 services:
-  backend:
-    build:
-      context: ./
-      dockerfile: Dockerfile
-    container_name: backend
-    # image: shivam1035/ems_project-backend:latest
-    volumes:
-      - .:/app
-    environment:
-      - DEBUG=1
-    depends_on:
-      - db
-    ports:
-      - "8000:8000"
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8000/"]
-      interval: 10s
-      retries: 5
 
   db:
     image: postgres:17
@@ -30,7 +12,26 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 10s
+      retries: 5
+
+  backend:
+    build: .
+    #   context: .
+    #   dockerfile: Dockerfile
+    container_name: backend
+    # image: shivam1035/ems_project-backend:latest
+    # volumes:
+    #   - .:/app
+    environment:
+      - DEBUG=1
+    depends_on:
+      - db
+    ports:
+      - "8000:8000"
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8000/" ]
       interval: 10s
       retries: 5
 

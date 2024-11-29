@@ -2,7 +2,7 @@
 FROM python:3.12.6-slim
 
 # Set the working directory in the container
-WORKDIR /app
+WORKDIR /
 
 # Copy all files from the current directory to the container
 COPY . .
