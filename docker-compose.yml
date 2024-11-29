@@ -8,11 +8,12 @@ services:
     container_name: backend
     # image: shivam1035/ems_project-backend:latest
     volumes:
-      - ./:/app
+      - .:/app
     environment:
       - DEBUG=1
     depends_on:
-      - db
+      - db:
+        condition: service_healthy
     ports:
       - "8000:8000"
     healthcheck:
